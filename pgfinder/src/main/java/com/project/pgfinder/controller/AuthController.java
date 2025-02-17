@@ -4,7 +4,7 @@ package com.project.pgfinder.controller;
 
 
 import com.project.pgfinder.entity.User;
-import com.project.pgfinder.security.JwtUtil;
+//import com.project.pgfinder.security.JwtUtil;
 import com.project.pgfinder.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,24 +21,18 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         Optional<User> existingUser = userService.findByEmail(user.getEmail());
 
         if (!existingUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+            return ResponseEntity.status(401).body("User not found");
         }
 
         if (!existingUser.get().getPassword().equals(user.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            return ResponseEntity.status(401).body("Invalid password");
         }
 
-        String token = jwtUtil.generateToken(user.getEmail());
-        return ResponseEntity.ok(Collections.singletonMap("token", token));
+        return ResponseEntity.ok(Collections.singletonMap("message", "Login successful"));
     }
-
-
 }

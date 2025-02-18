@@ -3,6 +3,7 @@ package com.project.pgfinder.controller;
 
 
 
+import com.project.pgfinder.dao.UserRepository;
 import com.project.pgfinder.entity.User;
 //import com.project.pgfinder.security.JwtUtil;
 import com.project.pgfinder.service.UserService;
@@ -17,7 +18,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+	 private final UserRepository userRepository;
 
+	    public AuthController(UserRepository userRepository) {
+	        this.userRepository = userRepository;
+	    }
     @Autowired
     private UserService userService;
 
@@ -35,4 +40,13 @@ public class AuthController {
 
         return ResponseEntity.ok(Collections.singletonMap("message", "Login successful"));
     }
+    @PostMapping("/register")
+    public String registerUser(@RequestBody User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            return "User already exists!";
+        }
+        userRepository.save(user);
+        return "User registered successfully!";
+    }
+    
 }

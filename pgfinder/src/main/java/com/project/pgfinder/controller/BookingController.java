@@ -1,6 +1,5 @@
 package com.project.pgfinder.controller;
 
-
 import com.project.pgfinder.entity.Booking;
 import com.project.pgfinder.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,15 @@ public class BookingController {
         return bookingService.createBooking(userId, propertyId, booking);
     }
 
+    @PutMapping("/{bookingId}")
+    public Booking updateBooking(@PathVariable Long bookingId, @RequestBody Booking booking) {
+        return bookingService.updateBooking(bookingId, booking);
+    }
+
     @DeleteMapping("/{bookingId}")
     public String cancelBooking(@PathVariable Long bookingId) {
         bookingService.cancelBooking(bookingId);
         return "Booking cancelled successfully!";
     }
+
 }

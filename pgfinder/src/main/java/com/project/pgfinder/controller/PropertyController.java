@@ -40,4 +40,10 @@ public class PropertyController {
     public List<Property> getPropertiesByLocation(@PathVariable String location) {
         return propertyService.getPropertiesByLocation(location);
     }
+
+    @GetMapping("/price/{maxPrice}")
+    public List<Property> getPropertiesByPrice(@PathVariable double maxPrice) {
+        return propertyService.getPropertiesByPrice(maxPrice);
+    }
+
 }

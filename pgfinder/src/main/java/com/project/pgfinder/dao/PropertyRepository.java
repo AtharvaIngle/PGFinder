@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
-    List<Property> findByLocation(String location); // Custom query to filter by location
+    List<Property> findByLocation(String location);
+    List<Property> findByPriceLessThanEqual(double price);
 }

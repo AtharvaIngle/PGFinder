@@ -1,7 +1,5 @@
 package com.project.pgfinder.entity;
 
-
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +31,7 @@ public class Booking {
     @Column(nullable = false)
     private LocalDate checkOutDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean confirmed;
+    private BookingStatus status=BookingStatus.PENDING; // ✅ Add this field
 }

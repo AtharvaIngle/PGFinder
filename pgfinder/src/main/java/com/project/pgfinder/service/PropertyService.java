@@ -29,6 +29,9 @@ public class PropertyService {
     public void deleteProperty(Long id) {
         propertyRepository.deleteById(id);
     }
+    public List<Property> getPropertiesByPrice(double maxPrice) {
+        return propertyRepository.findByPriceLessThanEqual(maxPrice);
+    }
 
     public List<Property> getPropertiesByLocation(String location) {
         return propertyRepository.findByLocation(location);
